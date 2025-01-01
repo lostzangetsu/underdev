@@ -1,5 +1,6 @@
-"use client";
-import React, { useState } from "react";
+"use client"; // Ensures this component runs only on the client side
+
+import React, { useState, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -20,12 +21,21 @@ export const FloatingNav = ({
   }[];
   className?: string;
 }) => {
+  // State to track whether the component is rendered on the client side
+  const [isClient, setIsClient] = useState(false);
+
+  // This effect will only run on the client side
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Prevent accessing scrollYProgress on the server side
   const { scrollYProgress } = useScroll();
 
   const [visible, setVisible] = useState(false);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
-    // Check if current is not undefined and is a number
+    // Ensure that the scrollYProgress is only accessed on the client side
     if (typeof current === "number") {
       let direction = current! - scrollYProgress.getPrevious()!;
 
@@ -40,6 +50,10 @@ export const FloatingNav = ({
       }
     }
   });
+
+  if (!isClient) {
+    return null; // Return nothing or a fallback component until client-side hydration
+  }
 
   return (
     <AnimatePresence mode="wait">
