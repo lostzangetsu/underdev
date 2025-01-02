@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { IoCopyOutline } from "react-icons/io5";
+import GridGlobe from './GridGlobe'
 
 // Also install this npm i --save-dev @types/react-lottie
 import dynamic from 'next/dynamic';
@@ -140,7 +141,7 @@ export const BentoGridItem = ({
           </div>
 
           {/* for the github 3d globe */}
-          {/* id === 2 && <GridGlobe /> */}
+          {id === 2 && <GridGlobe />}
 
           {/* Tech stack list div */}
           {id === 3 && (
