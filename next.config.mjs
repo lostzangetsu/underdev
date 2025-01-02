@@ -4,7 +4,16 @@ const nextConfig = {
     output: 'export',
     typescript: {
         ignoreBuildErrors: true,
-    }
+    },
+    reactStrictMode: false, // Disables strict mode if it's causing issues
+    webpack: (config) => {
+      config.ignoreWarnings = [
+        {
+          message: /Lottie/, // Suppress warnings related to Lottie
+        },
+      ];
+      return config;
+    },
 };
 
 export default withSentryConfig(nextConfig, {
